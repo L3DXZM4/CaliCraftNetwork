@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modlist Oficial - CaliCraft Network</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           VARIABLES DE ENTORNO EXACTAS DE TU LANDING PAGE (index.html)
+           ========================================================================== */
+        :root {
+            --bg-principal: #111215;
+            --bg-navbar: #1A1C23; 
+            --verde-minecraft: #47721e;
+            --verde-hover: #5c9327;
+            --texto-blanco: #ffffff;
+            --texto-gris: #b9bbbe;
+            --alerta-color: #d97706;
+            --discord-color: #5865F2;
+
+            /* Colores funcionales adaptados para la lectura de tarjetas */
+            --color-cliente: #3b82f6;
+            --color-servidor: #ef4444;
+            --color-compartido: #a855f7;
+            --navbar-height: 83px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--texto-blanco);
+            overflow-x: hidden;
+            padding-top: var(--navbar-height);
+            
+            /* CAPA DE FONDO EXACTA DE LA LANDING PAGE */
+            background-image: linear-gradient(rgba(17, 18, 21, 0.75), rgba(17, 18, 21, 0.75)), url('https://raw.githubusercontent.com/L3DXZM4/CaliCraftNetworkFiles/refs/heads/main/RecursosWeb/fondo.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* ==========================================================================
+           NAVBAR ESTILO MINECRAFT/ADOPTIUM (Idéntico a index.html)
+           ========================================================================== */
+        .navbar {
+            background-color: var(--bg-navbar);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            position: fixed;
+            width: 100%;
+            height: var(--navbar-height);
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-bottom: 3px solid #2e313c;
+        }
+
+        /* Enlace del Navbar que engloba tus dos imágenes y te lleva a la landing */
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.02);
+        }
+
+        .nav-icon {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-title {
+            height: 35px;
+            width: auto;
+        }
+
+        /* ==========================================================================
+           HERO / HEADER SECTION (Usando tu logotipo oficial titulo.png)
+           ========================================================================== */
+        .modlist-header {
+            text-align: center;
+            padding: 50px 20px 30px 20px;
+        }
+
+        .header-logo {
+            max-width: 1000px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .header-subtitle {
+            color: var(--texto-gris);
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto 20px auto;
+        }
+
+        .badge-version {
+            display: inline-block;
+            background-color: var(--verde-minecraft);
+            color: var(--texto-blanco);
+            padding: 6px 18px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 2px solid var(--verde-hover);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* ==========================================================================
+           DASHBOARD Y CONTROLES (Estilo translúcido a juego con la landing)
+           ========================================================================== */
+        .stats-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background-color: rgba(26, 28, 35, 0.85);
+            border: 2px solid #2e313c;
+            backdrop-filter: blur(4px);
+            padding: 1.5rem;
+            border-radius: 6px;
+            text-align: center;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: #4e5366;
+        }
+
+        .stat-card .number {
+            font-size: 2.4rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-card.total .number { color: var(--texto-blanco); }
+        .stat-card.client .number { color: var(--color-cliente); }
+        .stat-card.server .number { color: var(--color-servidor); }
+        .stat-card.shared .number { color: var(--color-compartido); }
+
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: var(--texto-gris);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .controls-wrapper {
+            background-color: rgba(26, 28, 35, 0.85);
+            border: 2px solid #2e313c;
+            backdrop-filter: blur(4px);
+            padding: 1.75rem;
+            border-radius: 6px;
+            margin-bottom: 2.5rem;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1.25rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 4px;
+            border: 2px solid #2e313c;
+            background: #111215;
+            color: var(--texto-blanco);
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--verde-minecraft);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--texto-gris);
+            font-size: 1rem;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+        }
+
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tab-btn {
+            padding: 10px 18px;
+            border-radius: 4px;
+            border: 2px solid #2e313c;
+            background: #111215;
+            color: var(--texto-blanco);
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            background: #2e313c;
+            border-color: #4e5366;
+        }
+
+        .tab-btn.active[data-cat="all"] { background: var(--verde-minecraft); border-color: var(--verde-hover); }
+        .tab-btn.active[data-cat="cliente"] { background: var(--color-cliente); border-color: #4b92ff; }
+        .tab-btn.active[data-cat="servidor"] { background: var(--color-servidor); border-color: #ff5c5c; }
+        .tab-btn.active[data-cat="compartido"] { background: var(--color-compartido); border-color: #b96eff; }
+
+        .view-toggle-group {
+            display: flex;
+            background: #111215;
+            padding: 4px;
+            border-radius: 4px;
+            border: 2px solid #2e313c;
+        }
+
+        .toggle-btn {
+            padding: 6px 12px;
+            border-radius: 3px;
+            border: none;
+            background: transparent;
+            color: var(--texto-gris);
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .toggle-btn:hover { color: var(--texto-blanco); }
+        .toggle-btn.active {
+            background: var(--verde-minecraft);
+            color: var(--texto-blanco);
+        }
+
+        /* ==========================================================================
+           GRID / LISTA DE MODS
+           ========================================================================== */
+        .mod-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mod-card {
+            background-color: rgba(26, 28, 35, 0.85);
+            border: 2px solid #2e313c;
+            backdrop-filter: blur(4px);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-top: 5px solid transparent;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .mod-card:hover {
+            transform: translateY(-4px);
+            border-color: #4e5366;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .mod-card.cliente { border-top-color: var(--color-cliente); }
+        .mod-card.servidor { border-top-color: var(--color-servidor); }
+        .mod-card.compartido { border-top-color: var(--color-compartido); }
+
+        .mod-card-top { margin-bottom: 1rem; }
+
+        .mod-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--texto-blanco);
+            margin-bottom: 0.5rem;
+        }
+
+        .subcat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: #111215;
+            border: 1px solid #2e313c;
+            color: var(--texto-gris);
+            margin-bottom: 0.75rem;
+        }
+
+        .mod-file-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.4rem;
+        }
+
+        .mod-file {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--texto-gris);
+            background: #111215;
+            border: 1px solid #2e313c;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            word-break: break-all;
+            margin-top: 0.25rem;
+        }
+
+        .mod-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .copy-btn {
+            background: #111215;
+            border: 1px solid #2e313c;
+            color: var(--texto-gris);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover, .copy-btn.copied {
+            background: var(--verde-minecraft) !important;
+            color: var(--texto-blanco) !important;
+            border-color: var(--verde-hover) !important;
+        }
+
+        .modrinth-btn {
+            background: rgba(27, 217, 106, 0.08);
+            border: 1px solid rgba(27, 217, 106, 0.3);
+            color: #1bd96a;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+        }
+
+        .modrinth-btn:hover {
+            background: #00af5c;
+            color: #ffffff;
+            border-color: #00af5c;
+        }
+
+        .modrinth-icon {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        .mod-card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 0.75rem;
+            border-top: 1px solid #2e313c;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .tag-cliente { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .tag-servidor { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+        .tag-compartido { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(26, 28, 35, 0.85);
+            border: 2px solid #2e313c;
+            border-radius: 6px;
+            color: var(--texto-gris);
+        }
+
+        /* VISTA EN LISTA COMPACTA ADAPTADA */
+        .mod-grid.list-view { grid-template-columns: 1fr; gap: 0.5rem; }
+        .mod-grid.list-view .mod-card {
+            flex-direction: row; align-items: center; justify-content: space-between;
+            padding: 0.75rem 1.25rem; border-top: none; border-left: 5px solid transparent; border-radius: 4px; gap: 1.5rem;
+        }
+        .mod-grid.list-view .mod-card.cliente { border-left-color: var(--color-cliente); }
+        .mod-grid.list-view .mod-card.servidor { border-left-color: var(--color-servidor); }
+        .mod-grid.list-view .mod-card.compartido { border-left-color: var(--color-compartido); }
+        .mod-grid.list-view .mod-card-top { margin-bottom: 0; display: flex; align-items: center; gap: 1.5rem; flex: 1; }
+        .mod-grid.list-view .subcat-badge { margin-bottom: 0; min-width: 140px; justify-content: center; }
+        .mod-grid.list-view .mod-name { font-size: 1.05rem; margin-bottom: 0; flex: 1; }
+        .mod-grid.list-view .mod-file-wrapper { flex-direction: row; align-items: center; gap: 1rem; margin-top: 0; }
+        .mod-grid.list-view .mod-actions { margin-top: 0; }
+        .mod-grid.list-view .mod-card-bottom { margin-top: 0; padding-top: 0; border-top: none; width: auto; }
+
+        @media (max-width: 992px) {
+            .filter-container { flex-direction: column; justify-content: center; }
+            .filter-tabs { justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 20px; }
+            .nav-title { display: none; } /* Oculta el título largo en móviles para que no se pise */
+            .mod-grid.list-view .mod-card { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 1rem; border-left: none; border-top: 5px solid transparent; }
+            .mod-grid.list-view .mod-card.cliente { border-top-color: var(--color-cliente); }
+            .mod-grid.list-view .mod-card.servidor { border-top-color: var(--color-servidor); }
+            .mod-grid.list-view .mod-card.compartido { border-top-color: var(--color-compartido); }
+            .mod-grid.list-view .mod-card-top { flex-direction: column; align-items: flex-start; gap: 0.5rem; width: 100%; }
+            .mod-grid.list-view .subcat-badge { justify-content: flex-start; min-width: auto; }
+            .mod-grid.list-view .mod-card-bottom { width: 100%; justify-content: space-between; padding-top: 0.5rem; border-top: 1px solid #2e313c; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">
+            <img src="https://raw.githubusercontent.com/L3DXZM4/CaliCraftNetworkFiles/refs/heads/main/RecursosWeb/icono.png" alt="CaliCraft Icono" class="nav-icon">
+            <img src="https://raw.githubusercontent.com/L3DXZM4/CaliCraftNetworkFiles/refs/heads/main/RecursosWeb/titulo.png" alt="CaliCraft Título" class="nav-title">
+        </a>
+    </nav>
+
+    <header class="modlist-header">
+        <img src="https://raw.githubusercontent.com/L3DXZM4/CaliCraftNetworkFiles/refs/heads/main/RecursosWeb/titulo.png" alt="CaliCraft Network" class="header-logo">
+        <p class="header-subtitle">Descubre los componentes y características tecnológicas integradas en la Network</p>
+        <div class="badge-version">Minecraft 1.21.1 — CaliCraft Version</div>
+    </header>
+
+    <div class="container">
+        <div class="stats-dashboard">
+            <div class="stat-card total">
+                <div class="number" id="statTotal">0</div>
+                <div class="label">Mods en Total</div>
+            </div>
+            <div class="stat-card client">
+                <div class="number" id="statClient">0</div>
+                <div class="label">Solo Cliente</div>
+            </div>
+            <div class="stat-card server">
+                <div class="number" id="statServer">0</div>
+                <div class="label">Solo Servidor</div>
+            </div>
+            <div class="stat-card shared">
+                <div class="number" id="statShared">0</div>
+                <div class="label">Compartidos</div>
+            </div>
+        </div>
+
+        <div class="controls-wrapper">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="modSearch" placeholder="Buscar por nombre de mod o archivo .jar...">
+            </div>
+            <div class="filter-container">
+                <div class="filter-tabs">
+                    <button class="tab-btn active" data-cat="all" onclick="filterCategory('all')">
+                        <i class="fas fa-cubes"></i> Todos
+                    </button>
+                    <button class="tab-btn" data-cat="cliente" onclick="filterCategory('cliente')">
+                        <i class="fas fa-desktop"></i> Solo Cliente
+                    </button>
+                    <button class="tab-btn" data-cat="servidor" onclick="filterCategory('servidor')">
+                        <i class="fas fa-server"></i> Solo Servidor
+                    </button>
+                    <button class="tab-btn" data-cat="compartido" onclick="filterCategory('compartido')">
+                        <i class="fas fa-network-wired"></i> Compartidos (Ambos lados)
+                    </button>
+                </div>
+
+                <div class="view-toggle-group">
+                    <button class="toggle-btn active" id="viewGrid" onclick="changeView('grid')">
+                        <i class="fas fa-th-large"></i> Rejilla
+                    </button>
+                    <button class="toggle-btn" id="viewList" onclick="changeView('list')">
+                        <i class="fas fa-list"></i> Lista
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mod-grid" id="modGrid">
+            </div>
+    </div>
+
+    <script>
+        let mods = []; 
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let currentView = 'grid';
+
+        const modGrid = document.getElementById('modGrid');
+        const modSearch = document.getElementById('modSearch');
+
+        async function loadModsData() {
+            try {
+                const response = await fetch('mods.json');
+                if (!response.ok) throw new Error(`Error HTTP! estado: ${response.status}`);
+                mods = await response.json();
+                
+                calculateMetrics();
+                renderMods();
+            } catch (error) {
+                console.error("No se pudo cargar la lista de mods:", error);
+                modGrid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--alerta-color); font-size: 2rem; margin-bottom: 10px;"></i>
+                        <p>Error al cargar la base de datos (mods.json). Asegúrate de que el archivo existe en el mismo directorio.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function calculateMetrics() {
+            document.getElementById('statTotal').innerText = mods.length;
+            document.getElementById('statClient').innerText = mods.filter(m => m.type === 'cliente').length;
+            document.getElementById('statServer').innerText = mods.filter(m => m.type === 'servidor').length;
+            document.getElementById('statShared').innerText = mods.filter(m => m.type === 'compartido').length;
+        }
+
+        function changeView(view) {
+            currentView = view;
+            document.getElementById('viewGrid').classList.remove('active');
+            document.getElementById('viewList').classList.remove('active');
+
+            if (view === 'grid') {
+                document.getElementById('viewGrid').classList.add('active');
+                modGrid.classList.remove('list-view');
+            } else {
+                document.getElementById('viewList').classList.add('active');
+                modGrid.classList.add('list-view');
+            }
+        }
+
+        function copyToClipboard(text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = `<i class="fas fa-check"></i>`;
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('copied');
+                }, 1500);
+            }).catch(err => console.error('Error al copiar: ', err));
+        }
+
+        function renderMods() {
+            modGrid.innerHTML = '';
+
+            const filtered = mods.filter(mod => {
+                const matchesCategory = currentCategory === 'all' || mod.type === currentCategory;
+                const matchesSearch = mod.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    mod.file.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                modGrid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-ghost" style="font-size: 2.5rem; margin-bottom: 10px; opacity: 0.4;"></i>
+                        <p>No se encontraron mods que coincidan con la búsqueda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(mod => {
+                const card = document.createElement('div');
+                card.className = `mod-card ${mod.type}`;
+
+                let tipoLegible = "Cliente";
+                if (mod.type === "servidor") tipoLegible = "Solo Servidor";
+                if (mod.type === "compartido") tipoLegible = "Compartido";
+
+                const modrinthSearchUrl = `https://modrinth.com/mods?q=${encodeURIComponent(mod.name)}`;
+
+                card.innerHTML = `
+                    <div class="mod-card-top">
+                        <span class="subcat-badge"><i class="fas fa-tag"></i> ${mod.subcat}</span>
+                        <div class="mod-name">${mod.name}</div>
+                        <div class="mod-meta">
+                            <div class="mod-file-wrapper">
+                                <span class="mod-file"><i class="far fa-file-archive"></i> ${mod.file}</span>
+                                <div class="mod-actions">
+                                    <button class="copy-btn" onclick="copyToClipboard('${mod.file}', this)" title="Copiar nombre del archivo">
+                                        <i class="far fa-copy"></i>
+                                    </button>
+                                    <a href="${modrinthSearchUrl}" target="_blank" class="modrinth-btn" title="Buscar en Modrinth">
+                                        <svg class="modrinth-icon" viewBox="0 0 512 514" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M503.16 323.56c11.39-42.09 12.16-87.65.04-132.8C466.57 54.23 326.04-26.8 189.33 9.78 83.81 38.02 11.39 128.07.69 230.47h43.3c10.3-83.14 69.75-155.74 155.76-178.76 106.3-28.45 215.38 28.96 253.42 129.67l-42.14 11.27c-19.39-46.85-58.46-81.2-104.73-95.83l-7.74 43.84c36.53 13.47 66.16 43.84 77 84.25 15.8 58.89-13.62 119.23-67 144.26l11.53 42.99c70.16-28.95 112.31-101.86 102.34-177.02l41.98-11.23a210.2 210.2 0 0 1-3.86 84.16z"></path>
+                                            <path d="M321.99 504.22C185.27 540.8 44.75 459.77 8.11 323.24A257.6 257.6 0 0 1 0 275.46h43.27c1.09 11.91 3.2 23.89 6.41 35.83 3.36 12.51 7.77 24.46 13.11 35.78l38.59-23.15c-3.25-7.5-5.99-15.32-8.17-23.45-24.04-89.6 29.2-181.7 118.92-205.71 17-4.55 34.1-6.32 50.8-5.61L255.19 133c-10.46.05-21.08 1.42-31.66 4.25-66.22 17.73-105.52 85.7-87.78 151.84 1.1 4.07 2.38 8.04 3.84 11.9l49.35-29.61-14.87-39.43 46.6-47.87 58.9-12.69 17.05 20.99-27.15 27.5-23.68 7.45-16.92 17.39 8.29 23.07s16.79 17.84 16.82 17.85l23.72-6.31 16.88-18.54 36.86-11.67 10.98 24.7-38.03 46.63-63.73 20.18-28.58-31.82-49.82 29.89c25.54 29.08 63.94 45.23 103.75 41.86l11.53 42.99c-59.41 7.86-117.44-16.73-153.49-61.91l-38.41 23.04c50.61 66.49 138.2 99.43 223.97 76.48 61.74-16.52 109.79-58.6 135.81-111.78l42.64 15.5c-30.89 66.28-89.84 118.94-166.07 139.34"></path>
+                                        </svg>
+                                        Modrinth
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"mod-card-bottom\">
+                        <span class=\"tag tag-${mod.type}\">${tipoLegible}</span>
+                    </div>
+                `;
+                modGrid.appendChild(card);
+            });
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-cat') === cat) btn.classList.add('active');
+            });
+            renderMods();
+        }
+
+        modSearch.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderMods();
+        });
+
+        window.onload = loadModsData;
+    </script>
+</body>
+
+</html>
